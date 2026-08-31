@@ -1,7 +1,10 @@
 import React from 'react';
-import { CloudSun, RefreshCw } from 'lucide-react';
+import { useAuth0 } from '@auth0/auth0-react';
+import { CloudSun, RefreshCw, LogOut, User } from 'lucide-react';
 
 const Navbar = ({ onRefresh, loading }) => {
+    const { user, isAuthenticated, logout } = useAuth0();
+
     return (
         <header className="navbar">
             <div className="navbar-brand">
@@ -13,14 +16,31 @@ const Navbar = ({ onRefresh, loading }) => {
             </div>
 
             <div className="navbar-actions">
-                <button
-                    onClick={onRefresh}
-                    className="btn-refresh"
-                    disabled={loading}
-                >
-                    <RefreshCw size={16} className={loading ? 'spin' : ''} />
-                    <span>{loading ? 'Refreshing...' : 'Refresh Data'}</span>
-                </button>
+                {isAuthenticated && (
+                    <>
+                        <button
+                            onClick={onRefresh}
+                            className="btn-refresh"
+                            disabled={loading}
+                        >
+                            <RefreshCw size={16} className={loading ? 'spin' : ''} />
+                            <span>{loading ? 'Refreshing...' : 'Refresh'}</span>
+                        </button>
+
+                        <div className="user-profile">
+                            <User size={16} />
+                            <span className="user-email">{user?.email}</span>
+                        </div>
+
+                        <button
+                            onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
+                            className="btn-logout"
+                        >
+                            <LogOut size={16} />
+                            <span>Log Out</span>
+                        </button>
+                    </>
+                )}
             </div>
         </header>
     );

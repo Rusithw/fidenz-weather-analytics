@@ -1,283 +1,88 @@
-:root {
-  --bg-color: #0f172a;
-  --card-bg: #1e293b;
-  --card-border: #334155;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --primary: #38bdf8;
-  --accent-high: #22c55e;
-  --accent-mid: #f59e0b;
-  --accent-low: #ef4444;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-}
-
-body {
-  background-color: var(--bg-color);
-  color: var(--text-main);
+/* Auth & Login Screen */
+.login-screen {
   min-height: 100vh;
-}
-
-.app-container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 24px 16px;
-}
-
-/* Navbar */
-.navbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--card-border);
-  margin-bottom: 24px;
-  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  padding: 40px 32px;
+  border-radius: 16px;
+  max-width: 440px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
 }
 
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.brand-icon {
-  color: var(--primary);
-}
-
-.navbar-brand h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-.subtitle {
-  font-size: 0.85rem;
+.login-card p {
   color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
-.btn-refresh {
+.btn-login {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background-color: #0284c7;
   color: #fff;
   border: none;
-  padding: 10px 16px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+  margin-top: 8px;
+  transition: 0.2s ease;
+}
+
+.btn-login:hover {
+  background-color: #0369a1;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #334155;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+}
+
+.btn-logout {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: transparent;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 8px 14px;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s ease;
 }
 
-.btn-refresh:hover:not(:disabled) {
-  background-color: #0369a1;
+.btn-logout:hover {
+  background-color: #ef4444;
+  color: white;
 }
 
-.btn-refresh:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.full-screen {
+  min-height: 100vh;
 }
 
-/* Meta & Cache Banner */
-.meta-banner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--card-bg);
-  border: 1px solid var(--card-border);
-  padding: 14px 20px;
-  border-radius: 12px;
-  margin-bottom: 24px;
-  font-size: 0.9rem;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.meta-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.badge {
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  margin-left: 6px;
-}
-
-.badge.hit {
-  background-color: rgba(34, 197, 94, 0.2);
-  color: #4ade80;
-}
-
-.badge.miss {
-  background-color: rgba(239, 68, 68, 0.2);
-  color: #f87171;
-}
-
-/* Responsive Grid */
-.weather-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-/* Weather Card */
-.weather-card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 16px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, border-color 0.2s ease;
-}
-
-.weather-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary);
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.rank-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #e2e8f0;
-}
-
-.score-badge {
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 4px 8px;
-  border-radius: 8px;
-}
-
-.score-badge.high {
-  background-color: rgba(34, 197, 94, 0.2);
-  color: var(--accent-high);
-}
-
-.score-badge.medium {
-  background-color: rgba(245, 158, 11, 0.2);
-  color: var(--accent-mid);
-}
-
-.score-badge.low {
-  background-color: rgba(239, 68, 68, 0.2);
-  color: var(--accent-low);
-}
-
-.city-info h3 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  display: inline-block;
-  margin-right: 8px;
-}
-
-.country-code {
-  font-size: 0.8rem;
-  background-color: #334155;
-  color: #cbd5e1;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.weather-status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 10px 0;
-}
-
-.weather-icon {
-  width: 50px;
-  height: 50px;
-}
-
-.weather-desc {
-  text-transform: capitalize;
-  font-size: 0.95rem;
-  color: var(--text-muted);
-}
-
-.temp-display {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 12px 0;
-}
-
-.temp-icon {
-  color: #f97316;
-}
-
-.temp-value {
-  font-size: 2.2rem;
-  font-weight: 800;
-}
-
-.weather-metrics {
-  display: flex;
-  justify-content: space-between;
-  margin-top: auto;
-  padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.metric {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* Spinner & Utility */
-.spin {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.loading-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 250px;
-  gap: 16px;
-  color: var(--text-muted);
-}
-
-.error-banner {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background-color: rgba(239, 68, 68, 0.15);
-  border: 1px solid var(--accent-low);
-  color: #fca5a5;
-  padding: 16px;
-  border-radius: 12px;
-  margin-bottom: 24px;
+.text-primary {
+  color: var(--primary);
 }
