@@ -99,8 +99,8 @@ function App() {
           </div>
         ) : (
           <div className="weather-grid">
-            {cities.map((city) => (
-              <WeatherCard key={city.cityId} city={city} />
+            {cities.map((city, index) => (
+              <WeatherCard key={city.cityId || city.id || index} city={city} />
             ))}
           </div>
         )}
