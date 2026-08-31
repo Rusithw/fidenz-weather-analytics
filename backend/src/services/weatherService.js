@@ -6,13 +6,14 @@ const { calculateComfortScore } = require('./comfortIndexService');
 
 const citiesFilePath = path.join(__dirname, '../../data/cities.json');
 
+// Take API key from .env file and throw error if not found
 const getAllCitiesWeatherAnalytics = async () => {
     const apiKey = process.env.OPENWEATHER_API_KEY;
     if (!apiKey) {
         throw new Error('OPENWEATHER_API_KEY is missing in .env');
     }
 
-    // 1. Read cities.json file
+    //  Read cities.json file
     const fileData = fs.readFileSync(citiesFilePath, 'utf-8');
     const citiesList = JSON.parse(fileData).List;
 
@@ -20,9 +21,12 @@ const getAllCitiesWeatherAnalytics = async () => {
     let hitsCount = 0;
     let missesCount = 0;
 
-    // 2. Loop through each city
+    // Loop through each city
     for (const city of citiesList) {
+
+        // ID is being created to distinguish each city.
         const cacheKey = `weather_${city.CityCode}`;
+        //First, observe that the data caches for this city from the past five minutes have been aggregated
         let cityWeatherData = weatherCache.get(cacheKey);
 
         // Check cache first
@@ -39,13 +43,13 @@ const getAllCitiesWeatherAnalytics = async () => {
             weatherCache.set(cacheKey, cityWeatherData, 300);
         }
 
-        // 3. Calculate Comfort Score (0 - 100)
+        // Calculate Comfort Score (0 - 100)
         const temp = cityWeatherData.main.temp;
         const humidity = cityWeatherData.main.humidity;
         const windSpeed = cityWeatherData.wind.speed;
         const comfortScore = calculateComfortScore(temp, humidity, windSpeed);
 
-        // 4. Push formatted object to array
+        // Push formatted object to array
         weatherList.push({
             cityId: cityWeatherData.id,
             cityName: cityWeatherData.name,
@@ -59,10 +63,10 @@ const getAllCitiesWeatherAnalytics = async () => {
         });
     }
 
-    // 5. Sort cities by Comfort Score (High to Low)
+    // Sort cities by Comfort Score (High to Low)
     weatherList.sort((a, b) => b.comfortScore - a.comfortScore);
 
-    // 6. Assign Rank Position (1, 2, 3...)
+    // Assign Rank Position (1, 2, 3...)
     const rankedCities = weatherList.map((item, index) => ({
         rank: index + 1,
         ...item
